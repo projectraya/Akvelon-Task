@@ -12,6 +12,7 @@ namespace Akvelon_Task
 		{
 			if(input.Length < 7 || input.Length > 100)
 			{
+				Console.WriteLine("Input needs to be longer than 6 characters and shorter than 101\n\n\n");
 				throw new ArgumentOutOfRangeException();
 			}
 			FizzBuzzResult result = new FizzBuzzResult();
