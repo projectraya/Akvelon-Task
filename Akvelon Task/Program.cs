@@ -4,24 +4,57 @@
     {
         static void Main(string[] args)
         {
-            FizzBuzzDetector fizzBuzzDetector = new FizzBuzzDetector();
 
-			Console.WriteLine("Enter your text (press ENTER twice to finish):"); 
+			Console.WriteLine("Input (press enter two times to submit):");
 
-			//this code ensures multiple lines of input can be pasted/written
-			string row = "";
-			List<string> rows = new List<string>();
-			while (!string.IsNullOrWhiteSpace(row = Console.ReadLine()))
+			List<string> inputLines = InputWithLines();
+			string joinedInput = string.Join(" ", inputLines);
+
+
+			FizzBuzzDetector detector = new FizzBuzzDetector();
+			FizzBuzzResult result = detector.getOverlappings(joinedInput);
+
+
+			List<string> outputWords = result.OutputString.Split(' ').ToList();
+			List<string> outputLines = OutputWithLines(outputWords, inputLines);
+
+
+
+			Console.WriteLine("\noutput string:");
+			foreach (string outLine in outputLines)
 			{
-				rows.Add(row);
+				Console.WriteLine(outLine);
 			}
-			string inputString = string.Join(" ", rows);
-			
 
-			FizzBuzzResult result = fizzBuzzDetector.getOverlappings(inputString);
+			Console.WriteLine($"\ncount: {result.WordCount}");
+		}
 
-            Console.WriteLine(result.OutputString);
-            Console.WriteLine(result.WordCount);
-        }
-    }
+		public static List<string> OutputWithLines(List<string> outputWords, List<string> inputLines)
+		{
+			int index = 0;
+			List<string> outputLines = new List<string>();
+
+			foreach (string inputLine in inputLines)
+			{
+				int wordCount = inputLine.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+
+				List<string> lineWords = outputWords.Skip(index).Take(wordCount).ToList();
+				outputLines.Add(string.Join(" ", lineWords));
+				index += wordCount;
+			}
+
+			return outputLines;
+		}
+
+		public static List<string> InputWithLines()
+		{
+			List<string> inputLines = new List<string>();
+			string line = "";
+			while (!string.IsNullOrEmpty(line = Console.ReadLine()))
+			{
+				inputLines.Add(line);
+			}
+			return inputLines;
+		}
+	}
 }
