@@ -14,5 +14,3 @@ If using a console:
 1. Select FizzBuzzTests project
 2. dotnet test
 
-Notes for potential improvements:
-When there are new lines in the input, the output ignores them and gives a single line as a result. This could be fixed with storing the new lines' positions and reapplying them in the output string.
